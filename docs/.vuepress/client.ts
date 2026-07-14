@@ -17,20 +17,29 @@ function wrapDocTables() {
   })
 }
 
+function scheduleWrapDocTables() {
+  if (typeof window === 'undefined') return
+  if (typeof requestAnimationFrame === 'function') {
+    requestAnimationFrame(() => wrapDocTables())
+    return
+  }
+  setTimeout(() => wrapDocTables(), 0)
+}
+
 export default defineClientConfig({
   enhance({ app, router }) {
     app.component('HomePage', HomePage)
     app.component('ShotPlaceholder', ShotPlaceholder)
-    router.afterEach(() => {
-      requestAnimationFrame(() => wrapDocTables())
-    })
+    if (typeof window !== 'undefined') {
+      router.afterEach(() => {
+        scheduleWrapDocTables()
+      })
+    }
   },
   layouts: {
     HomeLayout,
   },
   setup() {
-    if (typeof window !== 'undefined') {
-      requestAnimationFrame(() => wrapDocTables())
-    }
+    scheduleWrapDocTables()
   },
 })

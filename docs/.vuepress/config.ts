@@ -7,7 +7,7 @@ import { getDirname, path } from 'vuepress/utils'
 const __dirname = getDirname(import.meta.url)
 
 export default defineUserConfig({
-  base: '/fast-media/',
+  base: '/',
   lang: 'zh-CN',
   title: 'Fast Media',
   description:
@@ -39,7 +39,7 @@ export default defineUserConfig({
         content: 'Docker 一键部署的媒体自动化控制中心',
       },
     ],
-    ['link', { rel: 'icon', href: '/fast-media/logo.svg' }],
+    ['link', { rel: 'icon', href: '/logo.svg' }],
     [
       'link',
       {

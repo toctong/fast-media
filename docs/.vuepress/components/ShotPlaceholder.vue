@@ -23,6 +23,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { withBase } from 'vuepress/client'
 
 const props = withDefaults(
   defineProps<{
@@ -42,7 +43,7 @@ const props = withDefaults(
 )
 
 const missing = ref(false)
-const src = computed(() => `/shots/${props.filename}`)
+const src = computed(() => withBase(`/shots/${props.filename}`))
 </script>
 
 <style scoped>

@@ -54,6 +54,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { withBase } from 'vuepress/client'
 import * as THREE from 'three'
 
 defineProps<{
@@ -74,47 +75,47 @@ const menu = ['DASHBOARD', 'EXPLORE', 'RSS', 'CALENDAR', 'ORGANIZE', '115', 'EMB
 
 const shotSources = [
   {
-    src: '/shots/SHOT-01-dashboard.png',
+    src: withBase('/shots/SHOT-01-dashboard.png'),
     title: 'DASHBOARD',
     caption: '概览工作台 · 媒体统计与继续观看',
   },
   {
-    src: '/shots/SHOT-02-explore-search.png',
+    src: withBase('/shots/SHOT-02-explore-search.png'),
     title: 'EXPLORE',
     caption: '探索与全局搜索',
   },
   {
-    src: '/shots/SHOT-03-rss-download.png',
+    src: withBase('/shots/SHOT-03-rss-download.png'),
     title: 'RSS',
     caption: 'RSS 订阅与下载进度',
   },
   {
-    src: '/shots/SHOT-04-subscription-calendar.png',
+    src: withBase('/shots/SHOT-04-subscription-calendar.png'),
     title: 'CALENDAR',
     caption: '影视订阅日历',
   },
   {
-    src: '/shots/SHOT-05-organize.png',
+    src: withBase('/shots/SHOT-05-organize.png'),
     title: 'ORGANIZE',
     caption: '整理归档与刮削',
   },
   {
-    src: '/shots/SHOT-06-plugins-115.png',
+    src: withBase('/shots/SHOT-06-plugins-115.png'),
     title: '115',
     caption: '115 助手账号与空间',
   },
   {
-    src: '/shots/SHOT-07-assistant-mcp.png',
+    src: withBase('/shots/SHOT-07-assistant-mcp.png'),
     title: 'ASSISTANT',
     caption: '智能助手与系统工具',
   },
   {
-    src: '/shots/SHOT-08-emby-302.png',
+    src: withBase('/shots/SHOT-08-emby-302.png'),
     title: 'EMBY 302',
     caption: 'Emby 302 直链与刷新',
   },
   {
-    src: '/shots/SHOT-09-file-manager.png',
+    src: withBase('/shots/SHOT-09-file-manager.png'),
     title: 'FILES',
     caption: '文件与网盘浏览',
   },

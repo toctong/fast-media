@@ -17,15 +17,15 @@
 
     <div class="intro" :class="{ leave: introLeaving, gone: introGone }" aria-hidden="true">
       <div class="intro-brand">
-        <img src="/logo.svg" alt="" width="42" height="42" />
+        <img :src="logoSrc" alt="" width="42" height="42" />
         <span>FAST MEDIA</span>
       </div>
       <div class="intro-bar"><i /></div>
     </div>
 
     <header class="nav reveal" data-reveal>
-      <a class="brand" href="/">
-        <img src="/logo.svg" alt="Fast Media" width="28" height="28" />
+      <a class="brand" :href="home">
+        <img :src="logoSrc" alt="Fast Media" width="28" height="28" />
         <span>Fast Media</span>
       </a>
       <nav class="nav-links">
@@ -34,10 +34,10 @@
         <a href="#flow">流程</a>
         <a href="#gallery">界面</a>
         <a href="#plugins">插件</a>
-        <a href="/guide/setup.html">配置</a>
+        <a :href="linkSetup">配置</a>
       </nav>
       <div class="nav-actions">
-        <a class="btn primary magnet" href="/guide/getting-started.html">开始使用</a>
+        <a class="btn primary magnet" :href="linkStart">开始使用</a>
       </div>
     </header>
 
@@ -61,16 +61,16 @@
 
       <div class="cinema-orbit-cards" :style="cinemaDeckStyle" aria-hidden="true">
         <figure class="orbit-card oc1">
-          <img src="/shots/SHOT-01-dashboard.png" alt="" loading="eager" />
+          <img :src="asset('/shots/SHOT-01-dashboard.png')" alt="" loading="eager" />
         </figure>
         <figure class="orbit-card oc2">
-          <img src="/shots/SHOT-02-explore-search.png" alt="" loading="lazy" />
+          <img :src="asset('/shots/SHOT-02-explore-search.png')" alt="" loading="lazy" />
         </figure>
         <figure class="orbit-card oc3">
-          <img src="/shots/SHOT-04-subscription-calendar.png" alt="" loading="lazy" />
+          <img :src="asset('/shots/SHOT-04-subscription-calendar.png')" alt="" loading="lazy" />
         </figure>
         <figure class="orbit-card oc4">
-          <img src="/shots/SHOT-07-assistant-mcp.png" alt="" loading="lazy" />
+          <img :src="asset('/shots/SHOT-07-assistant-mcp.png')" alt="" loading="lazy" />
         </figure>
       </div>
 
@@ -113,7 +113,7 @@
           私人媒体控制中心 · 发现 · 订阅 · 整理 · 302 播放
         </p>
         <div class="cinema-cta reveal" data-reveal style="--d: 0.38s">
-          <a class="btn primary lg magnet" href="/guide/getting-started.html">
+          <a class="btn primary lg magnet" :href="linkStart">
             <span>立刻开始</span>
             <i class="btn-shine" />
           </a>
@@ -208,7 +208,7 @@
       </div>
 
       <figure class="gallery-feature reveal" data-reveal>
-        <img src="/shots/SHOT-01-dashboard.png" alt="Fast Media 概览" loading="lazy" />
+        <img :src="asset('/shots/SHOT-01-dashboard.png')" alt="Fast Media 概览" loading="lazy" />
       </figure>
 
       <div class="gallery-trio reveal" data-reveal>
@@ -265,8 +265,8 @@
         <p>Docker Hub 一键拉取，数据卷持久化；按文档完成 Emby / CD2 / RSS 即可闭环。</p>
       </div>
       <div class="cta-actions">
-        <a class="btn primary lg magnet" href="/guide/getting-started.html">快速开始</a>
-        <a class="btn ghost lg magnet" href="/guide/setup.html">配置指南</a>
+        <a class="btn primary lg magnet" :href="linkStart">快速开始</a>
+        <a class="btn ghost lg magnet" :href="linkSetup">配置指南</a>
       </div>
     </section>
 
@@ -276,10 +276,10 @@
         <span>私人媒体控制中心</span>
       </div>
       <div class="footer-links">
-        <a href="/guide/getting-started.html">快速开始</a>
-        <a href="/guide/setup.html">配置指南</a>
-        <a href="/guide/features.html">功能总览</a>
-        <a href="/donate.html">捐赠</a>
+        <a :href="linkStart">快速开始</a>
+        <a :href="linkSetup">配置指南</a>
+        <a :href="linkFeatures">功能总览</a>
+        <a :href="linkDonate">捐赠</a>
       </div>
       <p>© {{ year }} Fast Media · Built with VuePress + Vite</p>
     </footer>
@@ -290,10 +290,19 @@
 import Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
 import { computed, defineAsyncComponent, nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { withBase } from 'vuepress/client'
 import NebulaCanvas from './NebulaCanvas.vue'
 
 const FluidWebGL = defineAsyncComponent(() => import('./FluidWebGL.vue'))
 const WorkUniverse = defineAsyncComponent(() => import('./WorkUniverse.vue'))
+
+const home = withBase('/')
+const logoSrc = withBase('/logo.svg')
+const linkStart = withBase('/guide/getting-started.html')
+const linkSetup = withBase('/guide/setup.html')
+const linkFeatures = withBase('/guide/features.html')
+const linkDonate = withBase('/donate.html')
+const asset = (path: string) => withBase(path)
 
 const year = new Date().getFullYear()
 const rootEl = ref<HTMLElement | null>(null)
@@ -348,7 +357,7 @@ const features = [
     tone: '#5b8cff',
     desc: '探索热榜与资源站并轨，关键词一次投入，多站点回灌。',
     points: ['豆瓣 / TMDB / 腾讯 / B 站', '全局搜索跨探索 · 频道 · RSS', '详情补全海报与演职人员'],
-    shot: '/shots/SHOT-02-explore-search.png',
+    shot: asset('/shots/SHOT-02-explore-search.png'),
   },
   {
     icon: '↻',
@@ -356,7 +365,7 @@ const features = [
     tone: '#22d3c5',
     desc: '追更日历感知缺集，RSS 站点规则化搜种，自动推到下载器。',
     points: ['影视订阅 + Emby 库状态', 'RSS 站点优先级与认证', '下载进度 / 历史卡片'],
-    shot: '/shots/SHOT-04-subscription-calendar.png',
+    shot: asset('/shots/SHOT-04-subscription-calendar.png'),
   },
   {
     icon: '▣',
@@ -364,7 +373,7 @@ const features = [
     tone: '#7dd3fc',
     desc: '归档规则、智能重命名与 STRM 生成，把「下完了」变成「库里能播」。',
     points: ['归档刮削任务', '115 链接同步 STRM', 'CD2 跨存储搬运'],
-    shot: '/shots/SHOT-05-organize.png',
+    shot: asset('/shots/SHOT-05-organize.png'),
   },
   {
     icon: '↯',
@@ -372,7 +381,7 @@ const features = [
     tone: '#fda4af',
     desc: 'Emby 302 把播放流送到可直链路径，助手与定时任务接住日常巡检。',
     points: ['多实例 Emby 302', 'MCP 系统工具目录', '通知 / 日志 / Cron'],
-    shot: '/shots/SHOT-08-emby-302.png',
+    shot: asset('/shots/SHOT-08-emby-302.png'),
   },
 ]
 
@@ -399,58 +408,58 @@ const plugins = [
   {
     name: '115 助手',
     desc: '扫码/Cookie 登录，账号空间与 VIP 状态，链接同步任务。',
-    shot: '/shots/SHOT-06-plugins-115.png',
+    shot: asset('/shots/SHOT-06-plugins-115.png'),
   },
   {
     name: '115 云下载',
     desc: '一键推磁力到离线目录，和订阅 / 搜索流打通。',
-    shot: '/shots/SHOT-03-rss-download.png',
+    shot: asset('/shots/SHOT-03-rss-download.png'),
   },
   {
     name: '115 转存 / 回收站',
     desc: '分享转存与定时清空回收站，运维收口。',
-    shot: '/shots/SHOT-09-file-manager.png',
+    shot: asset('/shots/SHOT-09-file-manager.png'),
   },
   {
     name: 'CloudDrive2',
     desc: '挂载探测与目录树，服务整理与深度删除。',
-    shot: '/shots/SHOT-05-organize.png',
+    shot: asset('/shots/SHOT-05-organize.png'),
   },
   {
     name: 'Emby 302 / 刷新',
     desc: '路径映射、反代与扫库刷新，播放与入库闭环。',
-    shot: '/shots/SHOT-08-emby-302.png',
+    shot: asset('/shots/SHOT-08-emby-302.png'),
   },
   {
     name: '智能助手',
     desc: 'OpenAI 兼容协议 + 类 MCP 工具，读库/写操作可授权。',
-    shot: '/shots/SHOT-07-assistant-mcp.png',
+    shot: asset('/shots/SHOT-07-assistant-mcp.png'),
   },
   {
     name: '频道资源',
     desc: 'QQ / Telegram 频道资源导入与浏览。',
-    shot: '/shots/SHOT-02-explore-search.png',
+    shot: asset('/shots/SHOT-02-explore-search.png'),
   },
   {
     name: '天气 / 每日一言',
     desc: '概览氛围插件，让控制台每天多一点温度。',
-    shot: '/shots/SHOT-01-dashboard.png',
+    shot: asset('/shots/SHOT-01-dashboard.png'),
   },
 ]
 
 const galleryFeatured = [
-  { src: '/shots/SHOT-02-explore-search.png', alt: '探索' },
-  { src: '/shots/SHOT-04-subscription-calendar.png', alt: '订阅日历' },
-  { src: '/shots/SHOT-07-assistant-mcp.png', alt: '助手' },
+  { src: asset('/shots/SHOT-02-explore-search.png'), alt: '探索' },
+  { src: asset('/shots/SHOT-04-subscription-calendar.png'), alt: '订阅日历' },
+  { src: asset('/shots/SHOT-07-assistant-mcp.png'), alt: '助手' },
 ]
 
 const galleryRest = [
-  { src: '/shots/SHOT-03-rss-download.png', alt: 'RSS' },
-  { src: '/shots/SHOT-05-organize.png', alt: '整理' },
-  { src: '/shots/SHOT-06-plugins-115.png', alt: '115' },
-  { src: '/shots/SHOT-08-emby-302.png', alt: 'Emby 302' },
-  { src: '/shots/SHOT-09-file-manager.png', alt: '文件' },
-  { src: '/shots/SHOT-01-dashboard.png', alt: '概览' },
+  { src: asset('/shots/SHOT-03-rss-download.png'), alt: 'RSS' },
+  { src: asset('/shots/SHOT-05-organize.png'), alt: '整理' },
+  { src: asset('/shots/SHOT-06-plugins-115.png'), alt: '115' },
+  { src: asset('/shots/SHOT-08-emby-302.png'), alt: 'Emby 302' },
+  { src: asset('/shots/SHOT-09-file-manager.png'), alt: '文件' },
+  { src: asset('/shots/SHOT-01-dashboard.png'), alt: '概览' },
 ]
 
 let io: IntersectionObserver | null = null

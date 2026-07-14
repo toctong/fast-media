@@ -40,18 +40,12 @@ export default defineUserConfig({
       },
     ],
     ['link', { rel: 'icon', href: '/logo.svg' }],
-    [
-      'link',
-      {
-        rel: 'preconnect',
-        href: 'https://fonts.googleapis.com',
-      },
-    ],
+    ['link', { rel: 'preconnect', href: 'https://fonts.bunny.net', crossorigin: '' }],
     [
       'link',
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap',
+        href: 'https://fonts.bunny.net/css?family=manrope:400,500,600,700,800|space-grotesk:500,600,700&display=swap',
       },
     ],
   ],

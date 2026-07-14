@@ -75,47 +75,47 @@ const menu = ['DASHBOARD', 'EXPLORE', 'RSS', 'CALENDAR', 'ORGANIZE', '115', 'EMB
 
 const shotSources = [
   {
-    src: withBase('/shots/SHOT-01-dashboard.png'),
+    src: withBase('/shots/SHOT-01-dashboard.webp'),
     title: 'DASHBOARD',
     caption: '概览工作台 · 媒体统计与继续观看',
   },
   {
-    src: withBase('/shots/SHOT-02-explore-search.png'),
+    src: withBase('/shots/SHOT-02-explore-search.webp'),
     title: 'EXPLORE',
     caption: '探索与全局搜索',
   },
   {
-    src: withBase('/shots/SHOT-03-rss-download.png'),
+    src: withBase('/shots/SHOT-03-rss-download.webp'),
     title: 'RSS',
     caption: 'RSS 订阅与下载进度',
   },
   {
-    src: withBase('/shots/SHOT-04-subscription-calendar.png'),
+    src: withBase('/shots/SHOT-04-subscription-calendar.webp'),
     title: 'CALENDAR',
     caption: '影视订阅日历',
   },
   {
-    src: withBase('/shots/SHOT-05-organize.png'),
+    src: withBase('/shots/SHOT-05-organize.webp'),
     title: 'ORGANIZE',
     caption: '整理归档与刮削',
   },
   {
-    src: withBase('/shots/SHOT-06-plugins-115.png'),
+    src: withBase('/shots/SHOT-06-plugins-115.webp'),
     title: '115',
     caption: '115 助手账号与空间',
   },
   {
-    src: withBase('/shots/SHOT-07-assistant-mcp.png'),
+    src: withBase('/shots/SHOT-07-assistant-mcp.webp'),
     title: 'ASSISTANT',
     caption: '智能助手与系统工具',
   },
   {
-    src: withBase('/shots/SHOT-08-emby-302.png'),
+    src: withBase('/shots/SHOT-08-emby-302.webp'),
     title: 'EMBY 302',
     caption: 'Emby 302 直链与刷新',
   },
   {
-    src: withBase('/shots/SHOT-09-file-manager.png'),
+    src: withBase('/shots/SHOT-09-file-manager.webp'),
     title: 'FILES',
     caption: '文件与网盘浏览',
   },
@@ -146,6 +146,11 @@ type Pane = {
   phase: number
 }
 
+type MiniPane = {
+  mat: THREE.MeshBasicMaterial
+  src: string
+}
+
 let renderer: THREE.WebGLRenderer | null = null
 let scene: THREE.Scene | null = null
 let camera: THREE.PerspectiveCamera | null = null
@@ -156,6 +161,7 @@ let lookPath: THREE.CatmullRomCurve3 | null = null
 let raf = 0
 let running = true
 let panes: Pane[] = []
+let miniPanes: MiniPane[] = []
 let raycaster: THREE.Raycaster | null = null
 const pointerNdc = new THREE.Vector2(0, 0)
 const targetCam = { x: 0, y: 0 }
@@ -169,6 +175,8 @@ let hoverPane: Pane | null = null
 let startMs = 0
 let io: IntersectionObserver | null = null
 let visible = false
+let assetsRequested = false
+const textureBySrc = new Map<string, THREE.Texture>()
 const disposables: Array<{ dispose: () => void }> = []
 
 let dustCloud: THREE.Points | null = null
@@ -311,8 +319,7 @@ function createArchiveCore() {
     sculpture.add(accent)
   }
 
-  const loader = new THREE.TextureLoader()
-  loader.setCrossOrigin('anonymous')
+  miniPanes = []
   shotSources.forEach((s, i) => {
     const t = i / shotSources.length
     const a = t * Math.PI * 2
@@ -334,14 +341,7 @@ function createArchiveCore() {
     mesh.userData.baseY = y
     mesh.userData.phase = i * 0.55
     sculpture!.add(mesh)
-
-    loader.load(s.src, (tex) => {
-      tex.colorSpace = THREE.SRGBColorSpace
-      mat.map = tex
-      mat.color.set(0xffffff)
-      mat.needsUpdate = true
-      disposables.push(tex)
-    })
+    miniPanes.push({ mat, src: s.src })
   })
 
   const floor = new THREE.Mesh(
@@ -364,7 +364,7 @@ function createArchiveCore() {
 function createAtmosphere() {
   if (!scene) return
 
-  const count = 1100
+  const count = 520
   const positions = new Float32Array(count * 3)
   const colors = new Float32Array(count * 3)
   const cA = new THREE.Color(0x5b8cff)
@@ -463,16 +463,71 @@ function createSculpture() {
   createArchiveCore()
 }
 
+function createPlaceholderTexture() {
+  const data = new Uint8Array([20, 28, 48, 255])
+  const t = new THREE.DataTexture(data, 1, 1)
+  t.needsUpdate = true
+  disposables.push(t)
+  return t
+}
+
+function applyTexture(src: string, tex: THREE.Texture) {
+  textureBySrc.set(src, tex)
+  for (const pane of panes) {
+    if (pane.src !== src) continue
+    pane.mat.uniforms.uMap.value = tex
+    pane.mat.uniforms.uLoaded.value = 1
+  }
+  for (const mini of miniPanes) {
+    if (mini.src !== src) continue
+    mini.mat.map = tex
+    mini.mat.color.set(0xffffff)
+    mini.mat.needsUpdate = true
+  }
+}
+
+function requestAssets() {
+  if (assetsRequested) return
+  assetsRequested = true
+  const loader = new THREE.TextureLoader()
+  loader.setCrossOrigin('anonymous')
+  const maxAniso = renderer?.capabilities.getMaxAnisotropy() ?? 1
+  const uniqueSrc = [...new Set(shotSources.map((s) => s.src))]
+  for (const src of uniqueSrc) {
+    loader.load(
+      src,
+      (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace
+        tex.anisotropy = Math.min(4, maxAniso)
+        tex.generateMipmaps = true
+        tex.minFilter = THREE.LinearMipmapLinearFilter
+        disposables.push(tex)
+        applyTexture(src, tex)
+      },
+      undefined,
+      () => {
+        /* keep placeholder */
+      },
+    )
+  }
+}
+
+function ensureScene() {
+  if (!renderer) createRenderer()
+  if (renderer) requestAssets()
+}
+
 function createRenderer() {
   const canvas = canvasEl.value
-  if (!canvas) return
+  if (!canvas || renderer) return
+  const dpr = Math.min(window.devicePixelRatio || 1, window.matchMedia('(max-width: 900px)').matches ? 1.25 : 1.5)
   renderer = new THREE.WebGLRenderer({
     canvas,
-    antialias: true,
+    antialias: dpr < 1.5,
     alpha: true,
     powerPreference: 'high-performance',
   })
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+  renderer.setPixelRatio(dpr)
   renderer.setClearColor(0x000000, 0)
   renderer.toneMapping = THREE.ACESFilmicToneMapping
   renderer.toneMappingExposure = 1.25
@@ -528,16 +583,15 @@ function createRenderer() {
 
 function loadPanes() {
   if (!group) return
-  const loader = new THREE.TextureLoader()
-  loader.setCrossOrigin('anonymous')
   panes = []
+  const placeholder = createPlaceholderTexture()
 
   shots.forEach((s, index) => {
-    const geo = new THREE.PlaneGeometry(2.15, 1.36, 32, 24)
+    const geo = new THREE.PlaneGeometry(2.15, 1.36, 16, 12)
     disposables.push(geo)
     const mat = new THREE.ShaderMaterial({
       uniforms: {
-        uMap: { value: null },
+        uMap: { value: placeholder },
         uHover: { value: 0 },
         uTime: { value: 0 },
         uPointer: { value: new THREE.Vector2(0.5, 0.5) },
@@ -568,26 +622,6 @@ function loadPanes() {
       base: mesh.position.clone(),
       phase: index * 0.7,
     })
-
-    loader.load(
-      s.src,
-      (tex) => {
-        tex.colorSpace = THREE.SRGBColorSpace
-        tex.anisotropy = 4
-        mat.uniforms.uMap.value = tex
-        mat.uniforms.uLoaded.value = 1
-        disposables.push(tex)
-      },
-      undefined,
-      () => {
-        const data = new Uint8Array([20, 28, 48, 255])
-        const t = new THREE.DataTexture(data, 1, 1)
-        t.needsUpdate = true
-        mat.uniforms.uMap.value = t
-        mat.uniforms.uLoaded.value = 0.35
-        disposables.push(t)
-      },
-    )
   })
 }
 
@@ -762,7 +796,6 @@ function tick() {
 }
 
 onMounted(() => {
-  createRenderer()
   const canvas = canvasEl.value
   canvas?.addEventListener('pointermove', onPointer, { passive: true })
   window.addEventListener('resize', resize)
@@ -771,8 +804,9 @@ onMounted(() => {
   io = new IntersectionObserver(
     ([entry]) => {
       visible = !!entry?.isIntersecting
+      if (visible) ensureScene()
     },
-    { threshold: 0.02 },
+    { rootMargin: '240px 0px', threshold: 0.01 },
   )
   if (sectionEl.value) io.observe(sectionEl.value)
 
@@ -787,8 +821,10 @@ onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKey)
   canvasEl.value?.removeEventListener('pointermove', onPointer)
   document.documentElement.classList.remove('work-lightbox-lock')
+  textureBySrc.clear()
   disposables.forEach((d) => d.dispose())
   renderer?.dispose()
+  renderer = null
 })
 </script>
 

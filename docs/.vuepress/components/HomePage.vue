@@ -32,14 +32,14 @@
       </a>
       <nav class="nav-links">
         <a href="#work">Work</a>
-        <a href="#features">??</a>
-        <a href="#flow">??</a>
-        <a href="#gallery">??</a>
-        <a href="#plugins">??</a>
-        <a :href="linkSetup">??</a>
+        <a href="#features">能力</a>
+        <a href="#flow">流程</a>
+        <a href="#gallery">界面</a>
+        <a href="#plugins">插件</a>
+        <a :href="linkSetup">配置</a>
       </nav>
       <div class="nav-actions">
-        <a class="btn primary magnet" :href="linkStart">????</a>
+        <a class="btn primary magnet" :href="linkStart">开始使用</a>
       </div>
     </header>
 
@@ -95,7 +95,7 @@
       <aside class="cinema-rail right reveal" data-reveal style="--d: 0.08s">
         <p class="rail-label">LIVE SURFACE</p>
         <p class="rail-meta">POINTER LINKED</p>
-        <p class="rail-meta dim">SCROLL ? WORKSPACE</p>
+        <p class="rail-meta dim">SCROLL → WORKSPACE</p>
       </aside>
 
       <div class="cinema-core" :style="cinemaCoreStyle">
@@ -112,14 +112,14 @@
           </span>
         </h1>
         <p class="cinema-sub reveal" data-reveal style="--d: 0.3s">
-          ???????? ? ?? ? ?? ? ?? ? 302 ??
+          私人媒体控制中心 · 发现 · 订阅 · 整理 · 302 播放
         </p>
         <div class="cinema-cta reveal" data-reveal style="--d: 0.38s">
           <a class="btn primary lg magnet" :href="linkStart">
-            <span>????</span>
+            <span>立刻开始</span>
             <i class="btn-shine" />
           </a>
-          <a class="btn ghost lg magnet" href="#work">?? 3D ??</a>
+          <a class="btn ghost lg magnet" href="#work">进入 3D 展览</a>
         </div>
         <div class="cinema-chips reveal" data-reveal style="--d: 0.46s">
           <span v-for="tag in tags" :key="tag.k"><b>{{ tag.k }}</b>{{ tag.v }}</span>
@@ -134,17 +134,17 @@
 
     <section id="story" class="story-bridge reveal" data-reveal>
       <p class="eyebrow">PRIVATE MEDIA CONTROL CENTER</p>
-      <h2>????????????????????????</h2>
+      <h2>从「想补这集」到「库里可播」，全部收进同一控制面</h2>
       <p>
-        Fast Media ? RSS ????????115/CD2 ???STRM ??? Emby 302 ????????
-        ???????????
+        Fast Media 把 RSS 追更、规则搜种、115/CD2 整理、STRM 同步与 Emby 302 直链连成闭环——
+        自动化可感知、可干预。
       </p>
     </section>
 
     <section class="marquee" aria-hidden="true">
       <div class="marquee-track">
         <span v-for="n in 2" :key="n">
-          EMBY 302 ? STRM SYNC ? RSS ? 115 ? CLOUDDRIVE2 ? MCP ASSISTANT ? ORGANIZE ? DISCOVER ?
+          EMBY 302 · STRM SYNC · RSS · 115 · CLOUDDRIVE2 · MCP ASSISTANT · ORGANIZE · DISCOVER ·
         </span>
       </div>
     </section>
@@ -156,9 +156,9 @@
     <section id="features" class="section">
       <div class="section-head reveal" data-reveal>
         <p class="eyebrow">CAPABILITIES</p>
-        <h2>????????????</h2>
+        <h2>一套系统，覆盖媒体全链路</h2>
         <p>
-          ??????????????????????Fast Media ???????????????????????
+          不是单纯的下载器，也不是只会代理的反向外壳。Fast Media 面向「自建媒体库」场景，把常见手工步骤产品化。
         </p>
       </div>
       <div class="feature-grid">
@@ -187,7 +187,7 @@
     <section id="flow" class="section flow">
       <div class="section-head reveal" data-reveal>
         <p class="eyebrow">WORKFLOW</p>
-        <h2>??????????????</h2>
+        <h2>从「想补这集」到「库里可播」</h2>
       </div>
       <ol class="flow-track">
         <li
@@ -207,12 +207,12 @@
     <section id="gallery" class="gallery-section">
       <div class="section-head reveal" data-reveal>
         <p class="eyebrow">SURFACES</p>
-        <h2>?????????</h2>
-        <p>?????????????????????</p>
+        <h2>产品界面，沉浸呈现</h2>
+        <p>从概览到助手，把日常操作收进同一视觉节奏。</p>
       </div>
 
       <figure class="gallery-feature reveal" data-reveal>
-        <img :src="asset('/shots/SHOT-01-dashboard.webp')" alt="Fast Media ??" loading="lazy" />
+        <img :src="asset('/shots/SHOT-01-dashboard.webp')" alt="Fast Media 概览" loading="lazy" />
       </figure>
 
       <div class="gallery-trio reveal" data-reveal>
@@ -237,7 +237,7 @@
     <section id="plugins" class="section">
       <div class="section-head reveal" data-reveal>
         <p class="eyebrow">PLUGIN ECOSYSTEM</p>
-        <h2>??????????????</h2>
+        <h2>插件化扩展，核心能力开箱即用</h2>
       </div>
       <div class="plugin-grid">
         <article
@@ -258,34 +258,34 @@
 
     <section class="section quote reveal" data-reveal>
       <blockquote>
-        ?????????????????Fast Media ? Emby?115?CD2?RSS ? AI ??????????
-        ???????????????????????????????
+        「一切皆插件」让工具拥有生命力——Fast Media 把 Emby、115、CD2、RSS 与 AI 助手放进同一控制面，
+        让你只需要关注「今晚播什么」而不是「今晚又要去串三条命令行」。
       </blockquote>
     </section>
 
     <section class="cta reveal" data-reveal>
       <div>
-        <h2>?????????</h2>
-        <p>Docker Hub ????????????????? Emby / CD2 / RSS ?????</p>
+        <h2>部署上去，开始补片</h2>
+        <p>Docker Hub 一键拉取，数据卷持久化；按文档完成 Emby / CD2 / RSS 即可闭环。</p>
       </div>
       <div class="cta-actions">
-        <a class="btn primary lg magnet" :href="linkStart">????</a>
-        <a class="btn ghost lg magnet" :href="linkSetup">????</a>
+        <a class="btn primary lg magnet" :href="linkStart">快速开始</a>
+        <a class="btn ghost lg magnet" :href="linkSetup">配置指南</a>
       </div>
     </section>
 
     <footer class="footer">
       <div>
         <strong>Fast Media</strong>
-        <span>????????</span>
+        <span>私人媒体控制中心</span>
       </div>
       <div class="footer-links">
-        <a :href="linkStart">????</a>
-        <a :href="linkSetup">????</a>
-        <a :href="linkFeatures">????</a>
-        <a :href="linkDonate">??</a>
+        <a :href="linkStart">快速开始</a>
+        <a :href="linkSetup">配置指南</a>
+        <a :href="linkFeatures">功能总览</a>
+        <a :href="linkDonate">捐赠</a>
       </div>
-      <p>? {{ year }} Fast Media ? Built with VuePress + Vite</p>
+      <p>© {{ year }} Fast Media · Built with VuePress + Vite</p>
     </footer>
   </div>
 </template>
@@ -348,122 +348,122 @@ const cinemaSculptStyle = computed(() => ({
 }))
 
 const tags = [
-  { k: '302', v: ' ????' },
-  { k: 'STRM', v: ' ????' },
-  { k: '115', v: ' ?????' },
-  { k: 'MCP', v: ' ????' },
+  { k: '302', v: ' 直链反代' },
+  { k: 'STRM', v: ' 链接同步' },
+  { k: '115', v: ' 网盘全家桶' },
+  { k: 'MCP', v: ' 智能助手' },
 ]
 
 const features = [
   {
-    icon: '?',
-    title: '?????',
+    icon: '◎',
+    title: '发现与搜种',
     tone: '#5b8cff',
-    desc: '?????????????????????????',
-    points: ['?? / TMDB / ?? / B ?', '??????? ? ?? ? RSS', '???????????'],
+    desc: '探索热榜与资源站并轨，关键词一次投入，多站点回灌。',
+    points: ['豆瓣 / TMDB / 腾讯 / B 站', '全局搜索跨探索 · 频道 · RSS', '详情补全海报与演职人员'],
     shot: asset('/shots/SHOT-02-explore-search.webp'),
   },
   {
-    icon: '?',
-    title: '??? RSS',
+    icon: '↻',
+    title: '订阅与 RSS',
     tone: '#22d3c5',
-    desc: '?????????RSS ????????????????',
-    points: ['???? + Emby ???', 'RSS ????????', '???? / ????'],
+    desc: '追更日历感知缺集，RSS 站点规则化搜种，自动推到下载器。',
+    points: ['影视订阅 + Emby 库状态', 'RSS 站点优先级与认证', '下载进度 / 历史卡片'],
     shot: asset('/shots/SHOT-04-subscription-calendar.webp'),
   },
   {
-    icon: '?',
-    title: '?????',
+    icon: '▣',
+    title: '整理与入库',
     tone: '#7dd3fc',
-    desc: '??????????? STRM ??????????????????',
-    points: ['??????', '115 ???? STRM', 'CD2 ?????'],
+    desc: '归档规则、智能重命名与 STRM 生成，把「下完了」变成「库里能播」。',
+    points: ['归档刮削任务', '115 链接同步 STRM', 'CD2 跨存储搬运'],
     shot: asset('/shots/SHOT-05-organize.webp'),
   },
   {
-    icon: '?',
-    title: '?????',
+    icon: '↯',
+    title: '播放与运维',
     tone: '#fda4af',
-    desc: 'Emby 302 ??????????????????????????',
-    points: ['??? Emby 302', 'MCP ??????', '?? / ?? / Cron'],
+    desc: 'Emby 302 把播放流送到可直链路径，助手与定时任务接住日常巡检。',
+    points: ['多实例 Emby 302', 'MCP 系统工具目录', '通知 / 日志 / Cron'],
     shot: asset('/shots/SHOT-08-emby-302.webp'),
   },
 ]
 
 const steps = [
   {
-    title: '?? / ??',
-    desc: '???????????????? Emby ???????????',
+    title: '订阅 / 发现',
+    desc: '在探索或订阅里锁定作品，系统对齐 Emby 已入库集数，找到缺口。',
   },
   {
-    title: '?? / ??',
-    desc: 'RSS ????????????????? 115 ???? qB/TR?',
+    title: '搜种 / 推送',
+    desc: 'RSS 多站并发搜种，按规则挑包；磁力可推 115 云下载或 qB/TR。',
   },
   {
-    title: '?? / ??',
-    desc: '???????????115 ??? STRM??? CD2 ???',
+    title: '整理 / 同步',
+    desc: '下载完成后走归档命名；115 侧生成 STRM，按需 CD2 搬运。',
   },
   {
-    title: '?? / ??',
-    desc: '?? Emby ?????? 302 ????????????????',
+    title: '刷新 / 播放',
+    desc: '通知 Emby 扫库，播放走 302 直链。助手可查询进度、触发任务。',
   },
 ]
 
 const plugins = [
   {
-    name: '115 ??',
-    desc: '??/Cookie ???????? VIP ??????????',
+    name: '115 助手',
+    desc: '扫码/Cookie 登录，账号空间与 VIP 状态，链接同步任务。',
     shot: asset('/shots/SHOT-06-plugins-115.webp'),
   },
   {
-    name: '115 ???',
-    desc: '?????????????? / ??????',
+    name: '115 云下载',
+    desc: '一键推磁力到离线目录，和订阅 / 搜索流打通。',
     shot: asset('/shots/SHOT-03-rss-download.webp'),
   },
   {
-    name: '115 ?? / ???',
-    desc: '??????????????????',
+    name: '115 转存 / 回收站',
+    desc: '分享转存与定时清空回收站，运维收口。',
     shot: asset('/shots/SHOT-09-file-manager.webp'),
   },
   {
     name: 'CloudDrive2',
-    desc: '???????????????????',
+    desc: '挂载探测与目录树，服务整理与深度删除。',
     shot: asset('/shots/SHOT-05-organize.webp'),
   },
   {
-    name: 'Emby 302 / ??',
-    desc: '?????????????????????',
+    name: 'Emby 302 / 刷新',
+    desc: '路径映射、反代与扫库刷新，播放与入库闭环。',
     shot: asset('/shots/SHOT-08-emby-302.webp'),
   },
   {
-    name: '????',
-    desc: 'OpenAI ???? + ? MCP ?????/???????',
+    name: '智能助手',
+    desc: 'OpenAI 兼容协议 + 类 MCP 工具，读库/写操作可授权。',
     shot: asset('/shots/SHOT-07-assistant-mcp.webp'),
   },
   {
-    name: '????',
-    desc: 'QQ / Telegram ??????????',
+    name: '频道资源',
+    desc: 'QQ / Telegram 频道资源导入与浏览。',
     shot: asset('/shots/SHOT-02-explore-search.webp'),
   },
   {
-    name: '?? / ????',
-    desc: '???????????????????',
+    name: '天气 / 每日一言',
+    desc: '概览氛围插件，让控制台每天多一点温度。',
     shot: asset('/shots/SHOT-01-dashboard.webp'),
   },
 ]
 
 const galleryFeatured = [
-  { src: asset('/shots/SHOT-02-explore-search.webp'), alt: '??' },
-  { src: asset('/shots/SHOT-04-subscription-calendar.webp'), alt: '????' },
-  { src: asset('/shots/SHOT-07-assistant-mcp.webp'), alt: '??' },
+  { src: asset('/shots/SHOT-02-explore-search.webp'), alt: '探索' },
+  { src: asset('/shots/SHOT-04-subscription-calendar.webp'), alt: '订阅日历' },
+  { src: asset('/shots/SHOT-07-assistant-mcp.webp'), alt: '助手' },
 ]
 
 const galleryRest = [
   { src: asset('/shots/SHOT-03-rss-download.webp'), alt: 'RSS' },
-  { src: asset('/shots/SHOT-05-organize.webp'), alt: '??' },
+  { src: asset('/shots/SHOT-05-organize.webp'), alt: '整理' },
   { src: asset('/shots/SHOT-06-plugins-115.webp'), alt: '115' },
   { src: asset('/shots/SHOT-08-emby-302.webp'), alt: 'Emby 302' },
-  { src: asset('/shots/SHOT-09-file-manager.webp'), alt: '??' },
-  { src: asset('/shots/SHOT-01-dashboard.webp'), alt: '??' },
+  { src: asset('/shots/SHOT-09-file-manager.webp'), alt: '文件' },
+  { src: asset('/shots/SHOT-01-dashboard.webp'), alt: '概览' },
 ]
 
 let io: IntersectionObserver | null = null

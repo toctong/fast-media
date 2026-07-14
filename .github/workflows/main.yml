@@ -33,10 +33,10 @@ jobs:
           NODE_OPTIONS: --max_old_space_size=8192
         run: |
           npm run build
-          > .vitepress/dist/.nojekyll
+          touch docs/.vuepress/dist/.nojekyll
 
       - name: 部署文档
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages # 部署到 gh-pages 分支
-          folder: .vitepress/dist # VitePress 的构建输出目录
+          branch: gh-pages
+          folder: docs/.vuepress/dist
